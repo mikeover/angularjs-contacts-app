@@ -54,8 +54,14 @@
       <table class="table table-bordered">
         <tr>
           <th>#</th>
-          <th>Name</th>
-          <th>Email</th>
+          <th>Name
+            <span ng-click="order='name'" class="glyphicon glyphicon-menu-up"></span>
+            <span ng-click="order='-name'" class="glyphicon glyphicon-menu-down"></span>
+          </th>
+          <th>Email
+            <span ng-click="order='email'" class="glyphicon glyphicon-menu-up"></span>
+            <span ng-click="order='-email'" class="glyphicon glyphicon-menu-down"></span>
+          </th>
           <th>Birthday</th>
         </tr>
 
