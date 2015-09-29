@@ -8,7 +8,6 @@ app.controller('PersonListController', function($scope) {
   
   $scope.search = "";
   $scope.order = "email";
-  $scope.selectedPerson = null;
   
   $scope.selectPerson = function(person) {
     $scope.selectedPerson = person;
@@ -21,8 +20,16 @@ app.controller('PersonListController', function($scope) {
     }
     return true;
   };
-  
-  $scope.persons = [
+    
+});
+
+app.service('ContactService', function() {
+  return {
+    'addPerson': function(person) {
+      this.persons.push(person);
+    },
+    'selectedPerson': null,
+    'persons': [
 		{
 			"name": "Gregory Huffman",
 			"email": "Praesent@pedenec.net",
@@ -924,5 +931,5 @@ app.controller('PersonListController', function($scope) {
 			"country": "Taiwan"
 		}
     ]
-  
+  };
 });
