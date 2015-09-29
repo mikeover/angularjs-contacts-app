@@ -32,6 +32,18 @@
                placeholder="Search name..."
                />
         </div>
+        
+        <span class="glyphicon glyphicon-sort-by-attributes"></span>
+        
+        <div class="form-group">
+          <select class="form-control" 
+                  ng-model="order">
+            <option value="name" >Name (ASC)</option>
+            <option value="-name" >Name (DEC)</option>
+            <option value="email" >Email (ASC)</option>
+            <option value="-email" >Email (DEC)</option>
+          </select>
+        </div>
 
       </form>
     </div>
@@ -47,7 +59,7 @@
           <th>Birthday</th>
         </tr>
 
-        <tr ng-repeat="person in persons | filter:sensitiveSearch"
+        <tr ng-repeat="person in persons | filter:sensitiveSearch | orderBy:order"
             ng-style="{
                       'background-color':  $index == selectedIndex ? 'lightgray' : ''
                       }"
