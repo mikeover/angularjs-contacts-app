@@ -28,7 +28,7 @@
         <input type="text"
                class="form-control"
                id="name"
-               ng-model="search.$"
+               ng-model="search"
                placeholder="Search name..."
                />
         </div>
@@ -47,7 +47,7 @@
           <th>Birthday</th>
         </tr>
 
-        <tr ng-repeat="person in persons | filter:search"
+        <tr ng-repeat="person in persons | filter:sensitiveSearch"
             ng-style="{
                       'background-color':  $index == selectedIndex ? 'lightgray' : ''
                       }"
