@@ -32,6 +32,7 @@ app.controller('PersonListController', function($scope, ContactService) {
   
   $scope.loadMore = function() {
     console.log("loadMore");
+    $scope.contacts.loadMore();
   };
     
 });
@@ -48,12 +49,32 @@ app.service('ContactService', function(Contact) {
     'selectedPerson': null,
     'persons': [],
     'loadContacts': function() {
-      Contact.get(function(data) {
-        console.log(data);
-        angular.forEach(data.results, function(person) {
-          self.persons.push(new Contact(person)); // create Contact resource
+      if (self.hasMore && !self.isLoading)
+      {
+        self.isLoading = true;
+        
+        var params = { // query parameters to URL
+          'page': self.page
+        };
+        
+        Contact.get(params, function(data) {
+          console.log(data);
+          angular.forEach(data.results, function(person) {
+            self.persons.push(new Contact(person)); // create Contact resource
+          });
+
+          if (!data.next) {
+            self.hasMore = false;
+          }
+          self.isLoading = false;
         });
-      });
+      } // hasMore
+    },
+    'loadMore': function() {
+      if (self.hasMore && !self.isLoading) {
+        self.page += 1;
+        self.loadContacts();
+      }
     }
   };
   
