@@ -3,27 +3,28 @@ var app = angular.module('codecraft', [
   'infinite-scroll',
   'angularSpinner',
   'jcs-autoValidate',
-  'angular-ladda'
+  'angular-ladda',
+  'mgcrea.ngStrap'
 ]);
 
-app.config(function($httpProvider, $resourceProvider, laddaProvider) {
+app.config(['$httpProvider', '$resourceProvider', 'laddaProvider', function($httpProvider, $resourceProvider, laddaProvider) {
   $httpProvider.defaults.headers.common['Authorization'] = 'Token a9825926a7c8cd42127f8e81c3c3b9bab39c9695';
   $resourceProvider.defaults.stripTrailingSlashes = false; // only for this API
   laddaProvider.setOption({
     style: 'expand-right'
   });
-});
+}]);
 
-app.factory('Contact', function($resource) {
+app.factory('Contact', ['$resource', function($resource) {
   return $resource("https://codecraftpro.com/api/samples/v1/contact/:id/", 
                    {id:'@id'}, 
                    {update: {
                       method: 'PUT'
                    }
                    });
-});
+}]);
 
-app.controller('PersonDetailController', function($scope, ContactService) {
+app.controller('PersonDetailController', ['$scope', 'ContactService', function($scope, ContactService) {
   $scope.contacts = ContactService;
   
   $scope.save = function() {
@@ -33,14 +34,22 @@ app.controller('PersonDetailController', function($scope, ContactService) {
   $scope.remove = function() {
     $scope.contacts.removeContact($scope.contacts.selectedPerson);
   };
-});
+}]);
 
-app.controller('PersonListController', function($scope, ContactService) {
+app.controller('PersonListController', ['$scope', '$modal', 'ContactService', function($scope, $modal, ContactService) {
   
   $scope.search = "";
   $scope.order = "email";
   $scope.contacts = ContactService;
 
+  $scope.showCreateModal = function() {
+    $scope.createModal = $modal({
+      scope: $scope,
+      template: 'templates/modal.create.tpl.html'
+      show: true
+    });
+  };
+  
   $scope.$watch('search', function(newVal, oldVal) {
     if (angular.isDefined(newVal)) {
       $scope.contacts.doSearch(newVal); 
@@ -58,7 +67,7 @@ app.controller('PersonListController', function($scope, ContactService) {
     $scope.contacts.loadMore();
   };
     
-});
+}]);
 
 app.service('ContactService', function(Contact) {
   
