@@ -1,5 +1,6 @@
 var app = angular.module('codecraft', [
-  'ngResource'
+  'ngResource',
+  'infinite-scroll'
 ]);
 
 app.config(function($httpProvider, $resourceProvider) {
@@ -27,6 +28,10 @@ app.controller('PersonListController', function($scope, ContactService) {
         person.email.indexOf($scope.search) == 0;
     }
     return true;
+  };
+  
+  $scope.loadMore = function() {
+    console.log("loadMore");
   };
     
 });
