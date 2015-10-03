@@ -45,7 +45,7 @@ app.controller('PersonListController', ['$scope', '$modal', 'ContactService', fu
   $scope.showCreateModal = function() {
     $scope.createModal = $modal({
       scope: $scope,
-      template: 'templates/modal.create.tpl.html'
+      template: 'templates/modal.create.tpl.html',
       show: true
     });
   };
