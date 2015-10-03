@@ -104,6 +104,13 @@
     <div class="col-md-4" ng-controller="PersonDetailController">
       <div class="panel panel-default">
         <div class="panel-heading">Details</div>
+        
+        <button class="btn btn-danger btn-sm pull-right"
+                ladda="contacts.isDeleting"
+                ng-click="remove()" >Remove
+        </button>
+        <div class="clearfix"></div>
+        
         <div class="panel-body">
           
           <form class="form-horizontal"
