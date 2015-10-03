@@ -1,6 +1,7 @@
 var app = angular.module('codecraft', [
   'ngResource',
-  'infinite-scroll'
+  'infinite-scroll',
+  'angularSpinner'
 ]);
 
 app.config(function($httpProvider, $resourceProvider) {
