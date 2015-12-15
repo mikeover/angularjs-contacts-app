@@ -15,3 +15,15 @@ body {
 .spinner p {
   margin-top: 20px; 
 }
+
+.table {
+  tr {
+    td {
+      vertical-align: middle;
+      .profile-photo {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}

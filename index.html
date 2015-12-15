@@ -2,7 +2,9 @@
 <html lang="en" ng-app="codecraft" >
 <head >
 	<title >Contacts</title >
-	<link href="../libs/bootstrap/dist/css/bootstrap.min.css" 
+	<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" 
+          rel="stylesheet" >
+  <link href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css" 
           rel="stylesheet" >
 	<link href="main.css" 
           rel="stylesheet" >
@@ -68,7 +70,7 @@
               <span ng-click="order='email'" class="glyphicon glyphicon-menu-up"></span>
               <span ng-click="order='-email'" class="glyphicon glyphicon-menu-down"></span>
             </th>
-            <th>Birthday</th>
+            <th>Phone</th>
           </tr>
 
           <tr ng-repeat="person in contacts.persons"
@@ -76,10 +78,14 @@
                         'background-color':  person.email == contacts.selectedPerson.email ? 'lightgray' : ''
                         }"
               ng-click="contacts.selectedPerson = person">
-            <td>{{ $index }}</td>
+            <td>
+              <img ng-src="{{ person.photo }}"
+                     class="img-circle profile-photo"
+                     alt="" />
+            </td>
             <td>{{ person.name }}</td>
             <td>{{ person.email }}</td>
-            <td>{{ person.birthdate | date:"longDate" }}</td>
+            <td>{{ person.phonenumber }}</td>
           </tr>
 
         </table>
