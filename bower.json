@@ -16,7 +16,6 @@
     "tests"
   ],
   "dependencies": {
-    "AngularJS-Toaster": "angularjs-toaster#~0.4.181",
     "angular-auto-validate": "~1.18.17",
     "angular-ladda": "~0.3.1",
     "angular-resource": "~1.4.6",
@@ -24,6 +23,12 @@
     "angular-strap": "~2.3.3",
     "bootstrap-additions": "~0.3.1",
     "bootstrap": "~3.3.6",
-    "ngInfiniteScroll": "~1.2.1"
+    "ngInfiniteScroll": "~1.2.1",
+    "ngAnimate": "*",
+    "AngularJS-Toaster": "angularjs-toaster#~0.4.181",
+    "angular": "~1.4.8"
+  },
+  "resolutions": {
+    "angular": "1.4.8"
   }
 }

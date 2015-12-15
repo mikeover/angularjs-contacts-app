@@ -4,7 +4,9 @@
 	<title >Contacts</title >
 	<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" 
           rel="stylesheet" >
-  <link href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css" 
+    <link href="bower_components/bootstrap-additions/dist/bootstrap-additions.min.css" 
+          rel="stylesheet" >
+    <link href="bower_components/AngularJS-Toaster/toaster.min.css" 
           rel="stylesheet" >
 	<link href="main.css" 
           rel="stylesheet" >
@@ -24,6 +26,9 @@
 </nav >
 
 <div class="container main-content">
+  
+  <toaster-container></toaster-container>
+  
   <div class="row">
     <div class="col-md-8" ng-controller="PersonListController">
       <div class="row">
@@ -140,8 +145,9 @@
   </div>
   
 
-<script src="libs/angular/angular.min.js" ></script >
+<script src="bower_components/angular/angular.js" ></script >
 <script src="bower_components/angular-resource/angular-resource.min.js" ></script > 
+<script src="bower_components/angular-animate/angular-animate.js" ></script > 
 <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js" ></script > 
 <script src="bower_components/spin.js/spin.js" ></script > 
 <script src="bower_components/angular-spinner/angular-spinner.min.js" ></script > 
@@ -149,7 +155,8 @@
 <script src="bower_components/ladda/dist/ladda.min.js" ></script >  
 <script src="bower_components/angular-ladda/dist/angular-ladda.min.js" ></script > 
 <script src="bower_components/angular-strap/dist/angular-strap.min.js" ></script >  
-<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js" ></script >  
+<script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js" ></script >
+<script src="bower_components/AngularJS-Toaster/toaster.min.js" ></script >
 <script src="main.js" ></script >
 </body >
 </html >
