@@ -1,0 +1,29 @@
+{
+  "name": "angularjs-list-app",
+  "authors": [
+    "mike <mike@oversolve.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AngularJS-Toaster": "angularjs-toaster#~0.4.181",
+    "angular-auto-validate": "~1.18.17",
+    "angular-ladda": "~0.3.1",
+    "angular-resource": "~1.4.6",
+    "angular-spinner": "~0.7.0",
+    "angular-strap": "~2.3.3",
+    "bootstrap-additions": "~0.3.1",
+    "bootstrap": "~3.3.6",
+    "ngInfiniteScroll": "~1.2.1"
+  }
+}
