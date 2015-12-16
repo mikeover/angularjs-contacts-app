@@ -16,6 +16,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
       url: "/",
       templateUrl: 'templates/list.html',
       controller: 'PersonListController'
+    })
+    .state('edit', {
+      url: "/edit/:email",
+      templateUrl: 'templates/edit.html',
+      controller: 'PersonDetailController'
     });
   
   $urlRouterProvider.otherwise('/');
@@ -55,9 +60,13 @@ app.filter('defaultImage', function() {
   };
 });
 
-app.controller('PersonDetailController', ['$scope', 'ContactService', function($scope, ContactService) {
+app.controller('PersonDetailController', ['$scope', '$stateParams', 'ContactService', function($scope, $stateParams, ContactService) {
+  console.log($stateParams);
+  
   $scope.contacts = ContactService;
   
+  $scope.contacts.selectedPerson = $scope.contacts.getPerson($stateParams.email);
+    
   $scope.save = function() {
     $scope.contacts.updateContact($scope.contacts.selectedPerson);
   };
@@ -112,8 +121,15 @@ app.controller('PersonListController', ['$scope', '$modal', 'ContactService', fu
 app.service('ContactService', function(Contact, $q, toaster) {
   
   var self = {
-    'addPerson': function(person) {
-      this.persons.push(person);
+    'getPerson': function(email) {
+      console.log('getPerson email: ' + email);
+      for (var i=0; i<self.persons.length; i++)
+      {
+        var obj = self.persons[i];
+        if (obj.email == email) {
+         return obj; 
+        }
+      }
     },
     'page': 1,
     'hasMore': true,
