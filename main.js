@@ -14,7 +14,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('list', {
       url: "/",
-      templateUrl: 'templates/list.html'
+      templateUrl: 'templates/list.html',
+      controller: 'PersonListController'
     });
   
   $urlRouterProvider.otherwise('/');
