@@ -6,8 +6,19 @@ var app = angular.module('codecraft', [
   'angular-ladda',
   'mgcrea.ngStrap',
   'toaster',
-  'ngAnimate'
+  'ngAnimate',
+  'ui.router'
 ]);
+
+app.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+    .state('list', {
+      url: "/",
+      templateUrl: 'templates/list.html'
+    });
+  
+  $urlRouterProvider.otherwise('/');
+});
 
 app.config(
   ['$httpProvider', 
@@ -36,8 +47,6 @@ app.factory('Contact', ['$resource', function($resource) {
 
 app.filter('defaultImage', function() {
   return function(input, param) {
-    console.log(input);
-    console.log(param);
     if (!input) {
       return param;
     }
