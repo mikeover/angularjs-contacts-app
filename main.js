@@ -21,6 +21,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
       url: "/edit/:email",
       templateUrl: 'templates/edit.html',
       controller: 'PersonDetailController'
+    })
+    .state('create', {
+      url: "/create",
+      templateUrl: 'templates/edit.html',
+      controller: 'PersonCreateController'
     });
   
   $urlRouterProvider.otherwise('/');
@@ -65,6 +70,8 @@ app.controller('PersonDetailController', ['$scope', '$stateParams', '$state', 'C
   
   $scope.contacts = ContactService;
   
+  $scope.mode = "Edit";
+  
   $scope.contacts.selectedPerson = $scope.contacts.getPerson($stateParams.email);
     
   $scope.save = function() {
@@ -78,6 +85,22 @@ app.controller('PersonDetailController', ['$scope', '$stateParams', '$state', 'C
       $state.go("list");
     });
   };
+}]);
+
+app.controller('PersonCreateController', ['$scope', '$state', 'ContactService', function($scope, $state, ContactService) {
+  
+  $scope.contacts = ContactService;
+  
+  $scope.mode = "Create";
+
+  $scope.save = function() {
+    console.log("createContact");
+    $scope.contacts.createContact($scope.contacts.selectedPerson)
+      .then(function() {
+        $state.go("list");
+    });
+  };
+  
 }]);
 
 app.controller('PersonListController', ['$scope', '$modal', 'ContactService', function($scope, $modal, ContactService) {
@@ -95,14 +118,6 @@ app.controller('PersonListController', ['$scope', '$modal', 'ContactService', fu
     });
   };
   
-  $scope.createContact = function() {
-    console.log("createContact");
-    $scope.contacts.createContact($scope.contacts.selectedPerson)
-      .then(function() {
-        $scope.createModal.hide();
-    });
-  };
-
   $scope.loadMore = function() {
     console.log("loadMore");
     $scope.contacts.loadMore();
