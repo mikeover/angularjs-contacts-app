@@ -102,19 +102,7 @@ app.controller('PersonListController', ['$scope', '$modal', 'ContactService', fu
         $scope.createModal.hide();
     });
   };
-  
-  $scope.$watch('search', function(newVal, oldVal) {
-    if (angular.isDefined(newVal)) {
-      $scope.contacts.doSearch(newVal); 
-    }
-  });
-  
-  $scope.$watch('order', function(newVal, oldVal) {
-    if (angular.isDefined(newVal)) {
-      $scope.contacts.doOrder(newVal); 
-    }
-  });
-  
+
   $scope.loadMore = function() {
     console.log("loadMore");
     $scope.contacts.loadMore();
@@ -122,7 +110,7 @@ app.controller('PersonListController', ['$scope', '$modal', 'ContactService', fu
     
 }]);
 
-app.service('ContactService', function(Contact, $q, toaster) {
+app.service('ContactService', function(Contact, $rootScope, $q, toaster) {
   
   var self = {
     'getPerson': function(email) {
@@ -143,19 +131,17 @@ app.service('ContactService', function(Contact, $q, toaster) {
     'selectedPerson': null,
     'persons': [],
     'search': null,
-    'order': null,
+    'ordering': 'name',
     'doSearch': function(search) {
       self.hasMore = true;
       self.page = 1;
       self.persons = [];
-      self.search = search;
       self.loadContacts();
     },    
-    'doOrder': function(order) {
+    'doOrder': function() {
       self.hasMore = true;
       self.page = 1;
       self.persons = [];
-      self.order = order;
       self.loadContacts();
     },
     'loadContacts': function() {
@@ -166,7 +152,7 @@ app.service('ContactService', function(Contact, $q, toaster) {
         var params = { // query parameters to URL
           'page': self.page,
           'search': self.search,
-          'ordering': self.order
+          'ordering': self.ordering
         };
         
         Contact.get(params, function(data) {
@@ -229,10 +215,28 @@ app.service('ContactService', function(Contact, $q, toaster) {
         d.resolve();
       });
       return d.promise;
+    },
+    'watchFilters': function() {
+      $rootScope.$watch(function() {
+        return self.search;
+      }, function (newVal) {
+        if (angular.isDefined(newVal)) {
+          self.doSearch(); 
+        }
+      });
+      
+      $rootScope.$watch(function() {
+        return self.ordering;
+      }, function(newVal) {
+        if (angular.isDefined(newVal)) {
+          self.doOrder();
+        }
+      });
     }
   };
   
   self.loadContacts();
+  self.watchFilters();
   
   return self;
   
