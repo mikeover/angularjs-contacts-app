@@ -60,7 +60,7 @@ app.filter('defaultImage', function() {
   };
 });
 
-app.controller('PersonDetailController', ['$scope', '$stateParams', 'ContactService', function($scope, $stateParams, ContactService) {
+app.controller('PersonDetailController', ['$scope', '$stateParams', '$state', 'ContactService', function($scope, $stateParams, $state, ContactService) {
   console.log($stateParams);
   
   $scope.contacts = ContactService;
@@ -68,11 +68,15 @@ app.controller('PersonDetailController', ['$scope', '$stateParams', 'ContactServ
   $scope.contacts.selectedPerson = $scope.contacts.getPerson($stateParams.email);
     
   $scope.save = function() {
-    $scope.contacts.updateContact($scope.contacts.selectedPerson);
+    $scope.contacts.updateContact($scope.contacts.selectedPerson).then(function() {
+      $state.go("list");
+    });
   };
   
   $scope.remove = function() {
-    $scope.contacts.removeContact($scope.contacts.selectedPerson);
+    $scope.contacts.removeContact($scope.contacts.selectedPerson).then(function() {
+      $state.go("list");
+    });
   };
 }]);
 
@@ -185,14 +189,18 @@ app.service('ContactService', function(Contact, $q, toaster) {
       }
     },
     'updateContact': function(person) {
+      var d = $q.defer();
       console.log('updateContact'); 
       self.isSaving = true;
       person.$update().then(function() {
         self.isSaving = false;
         toaster.pop('success', 'Updated ' + person.name);
+        d.resolve();
       });
+      return d.promise;
     },
     'removeContact': function(person) {
+      var d = $q.defer();
      console.log('removeContact');
       self.isDeleting = true;
       person.$remove().then(function() {
@@ -201,10 +209,13 @@ app.service('ContactService', function(Contact, $q, toaster) {
         self.persons.splice(index, 1);
         self.selectedPerson = null;
         toaster.pop('success', 'Deleted ' + person.name);
+        d.resolve();
       });
+      return d.promise;
+      
     },
     'createContact': function(person) {
-      var defer = $q.defer();
+      var d = $q.defer();
       console.log('createContact'); 
       self.isSaving = true;
       Contact.save(person).$promise.then(function() {
@@ -215,9 +226,9 @@ app.service('ContactService', function(Contact, $q, toaster) {
         self.persons = [];
         self.loadContacts();
         toaster.pop('success', 'Created ' + person.name);
-        defer.resolve();
+        d.resolve();
       });
-      return defer.promise;
+      return d.promise;
     }
   };
   
