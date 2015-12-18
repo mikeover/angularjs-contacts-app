@@ -89,8 +89,17 @@ app.directive('ccCard', function() {
     'restrict': 'AE',
     'templateUrl': 'templates/card.html',
     'scope': {
-      'user':'=',
-      'deleteUser': '&'
+      'user':'='
+    },
+    'controller': function($scope, ContactService) {
+      $scope.isDeleting = false;
+      $scope.deleteUser = function() {
+        $scope.isDeleting = true;
+        ContactService.removeContact($scope.user).then(function() {
+          $scope.isDeleting = true;
+        });
+      };
+      
     }
   }
 });
@@ -147,23 +156,10 @@ app.controller('PersonListController', ['$scope', '$modal', 'ContactService', fu
   $scope.search = "";
   $scope.order = "email";
   $scope.contacts = ContactService;
-
-  $scope.showCreateModal = function() {
-    $scope.contacts.selectedPerson = {};
-    $scope.createModal = $modal({
-      scope: $scope,
-      template: 'templates/modal.create.tpl.html',
-      show: true
-    });
-  };
   
   $scope.loadMore = function() {
     console.log("loadMore");
     $scope.contacts.loadMore();
-  };
-  
-  $scope.parentDeleteUser = function(user) {
-    $scope.contacts.removeContact(user);
   };
     
 }]);
