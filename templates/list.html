@@ -42,12 +42,12 @@
     <div ng-show="contacts.persons.length == 0 && !contacts.isLoading">
         <div class="alert alert-info">
           <p class="text-center">
-            No results found for search term '{{ search }}'
+            No results found for search term '{{ contacts.search }}'
           </p>
         </div>
     </div>
 
-   <cc-spinner is-loading="contacts.isLoading"></cc-spinner>
+   <cc-spinner is-loading="contacts.isLoading" message="Mooing..."></cc-spinner>
    
   </div>
   
