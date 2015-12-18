@@ -72,6 +72,12 @@ app.factory('Contact', ['$resource', function($resource) {
                    });
 }]);
 
+app.directive('ccSpinner', function() {
+  return {
+    'templateUrl': 'templates/spinner.html'
+  }
+});
+
 app.filter('defaultImage', function() {
   return function(input, param) {
     if (!input) {
